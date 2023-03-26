@@ -4,14 +4,31 @@
 //12 13 14 05
 //11 16 15 06
 //10 09 08 07
-int[] elementsToMatrix = ArreyElements();
-int[,] createMatrix = CreateMatrix(elementsToMatrix);
-PrintMatrix(createMatrix);
-int[,] CreateMatrix(int[] array)
+int numberX = UserInput("Введите количество элементов по оси X - ");
+int numberY = UserInput("Введите количество элементов по оси Y - ");
+if(numberX > 0 && numberY > 0)
 {
-    int[,] matrix = new int[4, 4];
+int[] elementsToMatrix = ArreyElements(numberX,numberY);
+int[,] createMatrix = CreateMatrix(elementsToMatrix,numberX,numberY);
+PrintMatrix(createMatrix);    
+}
+else
+{
+    Console.WriteLine("Ошибка! Количество элементов должно быть больше 0");
+}
+
+int UserInput(string massage)
+{
+    Console.Write(massage);
+    string value = Console.ReadLine();
+    int result = Convert.ToInt32(value);
+    return result;
+}
+int[,] CreateMatrix(int[] array, int x, int y)
+{
+    int[,] matrix = new int[x, y];
     {
-        var x = 0;
+        var index = 0;
         var constI = 0;
         var constJ = 0;
         var maxI = matrix.GetLength(0);
@@ -24,8 +41,8 @@ int[,] CreateMatrix(int[] array)
             {
                 if (matrix[constI, j] == 0)
                 {
-                    matrix[constI, j] = array[x];
-                    x++;
+                    matrix[constI, j] = array[index];
+                    index++;
                     constJ++;
                 }
             }
@@ -34,8 +51,8 @@ int[,] CreateMatrix(int[] array)
             {
                 if (matrix[i, constJ] == 0)
                 {
-                matrix[i, constJ] = array[x];
-                x++;
+                matrix[i, constJ] = array[index];
+                index++;
                 constI++;
                 }
                     
@@ -45,8 +62,8 @@ int[,] CreateMatrix(int[] array)
             {
                 if (matrix[constI, k] == 0)
                 {
-                    matrix[constI, k] = array[x];
-                    x++;
+                    matrix[constI, k] = array[index];
+                    index++;
                     constJ--;
                 }
             }
@@ -55,8 +72,8 @@ int[,] CreateMatrix(int[] array)
             {
                 if (matrix[l, constJ] == 0)
                 {
-                    matrix[l, constJ] = array[x];
-                    x++;
+                    matrix[l, constJ] = array[index];
+                    index++;
                     constI--;
                 }
             }
@@ -93,12 +110,12 @@ void PrintMatrix(int[,] matrix)
         }
     }
 }
-int[] ArreyElements()
+int[] ArreyElements(int x, int y)
 {
-    int[] arrey = new int[16];
-    for (int i = 0; i < 16; i++)
+    int[] arr = new int[x*y];
+    for (int i = 0; i < arr.Length; i++)
     {
-        arrey[i] = i + 1;
+        arr[i] = i + 1;
     }
-    return arrey;
+    return arr;
 }
